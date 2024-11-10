@@ -9,6 +9,11 @@ public class SlashCommandListener extends ListenerAdapter {
 
     private Utilities utilities = new Utilities();
 
+    /**
+     * Método para escuchar el evento de comando para ejecutarlos.
+     *
+     * @param event Evento de comando.
+     */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         switch(event.getName()) {

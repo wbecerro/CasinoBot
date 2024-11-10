@@ -8,13 +8,17 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class ButtonInteractionListeners extends ListenerAdapter {
 
     private Utilities utilities = new Utilities();
 
+    /**
+     * Método para escuchar el evento de interactuar con un botón para el juego de blackjack.
+     *
+     * @param event Evento de interacción.
+     */
     @Override
     public void onButtonInteraction(ButtonInteractionEvent event) {
         String[] id = event.getComponentId().split(":");

@@ -456,6 +456,12 @@ public class Utilities {
         event.replyEmbeds(randomEmbed.build(), loseEmbed.build()).queue();
     }
 
+    /**
+     * Método para hacer todos los cálculos necesarios para el blackjack y mostrar los resultados.
+     *
+     * @param chips Cantidad de fichas a apostar.
+     * @param event Evento de comando.
+     */
     public void blackjack(int chips, SlashCommandInteractionEvent event) {
         EmbedBuilder infoEmbed = new EmbedBuilder();
         infoEmbed.setTitle("Blackjack");
