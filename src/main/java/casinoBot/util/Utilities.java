@@ -219,6 +219,17 @@ public class Utilities {
      * @param event Evento de comando.
      */
     public void addBalance(User user, int chips, SlashCommandInteractionEvent event) {
+        if(!isUserAdded(user.getId())) {
+            if(!addUserToData(user.getId())) {
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle("Error", null);
+                embedBuilder.setColor(Color.RED);
+                embedBuilder.setDescription("Ha ocurrido un error al recuperar tu saldo, contacta con un administrador.");
+                event.replyEmbeds(embedBuilder.build()).queue();
+                return;
+            }
+        }
+
         boolean ok = addBalance(user.getId(), chips);
         if(ok) {
             event.reply("Se han añadido " + chips + " fichas a " + user.getName() + ".").queue();
@@ -235,6 +246,17 @@ public class Utilities {
      * @param event Evento de comando.
      */
     public void removeBalance(User user, int chips, SlashCommandInteractionEvent event) {
+        if(!isUserAdded(user.getId())) {
+            if(!addUserToData(user.getId())) {
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle("Error", null);
+                embedBuilder.setColor(Color.RED);
+                embedBuilder.setDescription("Ha ocurrido un error al recuperar tu saldo, contacta con un administrador.");
+                event.replyEmbeds(embedBuilder.build()).queue();
+                return;
+            }
+        }
+
         boolean ok = removeBalance(user.getId(), chips);
         if(ok) {
             event.reply("Se han quitado " + chips + " fichas a " + user.getName() + ".").queue();
