@@ -46,6 +46,14 @@ public class Utilities {
     private final Logger logger = Logger.getLogger("Casino.Bot");
     private final int winChance = 30;
     public final int winMultiplier = 2;
+    private File userDirectory;
+
+    public Utilities() {
+        userDirectory = new File("users");
+        if (!userDirectory.exists()) {
+            userDirectory.mkdirs();
+        }
+    }
 
     /**
      * Método que consigue el token del bot desde un archivo externo por asuntos de seguridad.
@@ -77,7 +85,8 @@ public class Utilities {
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectNode jsonNode = objectMapper.createObjectNode();
             jsonNode.put("chips", 0);
-            objectMapper.writeValue(new File("src/main/resources/users/" + id + ".json"), jsonNode);
+            File userFile = new File(userDirectory, id + ".json");
+            objectMapper.writeValue(userFile, jsonNode);
             return true;
         } catch(IOException exception) {
             logger.log(Level.SEVERE, "Ha ocurrido un error al registrar al usuario en la base de datos: ", exception);
@@ -92,7 +101,7 @@ public class Utilities {
      * @return true si ya está añadido o false en caso contrario.
      */
     private boolean isUserAdded(String id) {
-        File file = new File("src/main/resources/users/" + id + ".json");
+        File file = new File(userDirectory, id + ".json");
         return file.isFile();
     }
 
@@ -105,7 +114,7 @@ public class Utilities {
     private int getBalance(String id) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode node = mapper.readTree(new File("src/main/resources/users/" + id + ".json"));
+            JsonNode node = mapper.readTree(new File(userDirectory, id + ".json"));
             int chips = node.get("chips").asInt();
             return chips;
         } catch (IOException exception) {
@@ -135,7 +144,7 @@ public class Utilities {
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectNode jsonNode = objectMapper.createObjectNode();
             jsonNode.put("chips", balance);
-            objectMapper.writeValue(new File("src/main/resources/users/" + id + ".json"), jsonNode);
+            objectMapper.writeValue(new File(userDirectory, id + ".json"), jsonNode);
             return true;
         } catch(IOException exception) {
             return false;
@@ -158,7 +167,7 @@ public class Utilities {
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectNode jsonNode = objectMapper.createObjectNode();
             jsonNode.put("chips", balance + chips);
-            objectMapper.writeValue(new File("src/main/resources/users/" + id + ".json"), jsonNode);
+            objectMapper.writeValue(new File(userDirectory, id + ".json"), jsonNode);
             return true;
         } catch(IOException exception) {
             return false;
